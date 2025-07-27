@@ -1,34 +1,14 @@
 {
   "name": "tecdev-website",
   "version": "1.0.0",
-  "description": "Sitio web corporativo de Tecdev SpA - Consultoría de software",
-  "main": "server.js",
+  "description": "Sitio web oficial de Tecdev SpA",
+  "main": "index.html",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "serve": "node server.js",
-    "test": "echo \"No tests specified\" && exit 0"
+    "start": "echo 'Static website - no build required'",
+    "build": "echo 'Static website - no build required'"
   },
-  "keywords": [
-    "website",
-    "consultoría",
-    "software",
-    "desarrollo",
-    "tecnología",
-    "chile"
-  ],
+  "keywords": ["static", "website", "tecdev"],
   "author": "Tecdev SpA",
   "license": "UNLICENSED",
-  "private": true,
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tecdev/website.git"
-  },
-  "bugs": {
-    "url": "https://github.com/tecdev/website/issues"
-  },
-  "homepage": "https://tecdev.cl"
+  "private": true
 } 

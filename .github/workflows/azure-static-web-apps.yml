@@ -28,6 +28,7 @@ jobs:
           api_location: "" # Api source code path - leave empty if not used
           output_location: "" # Built app content directory - leave empty if not used
           skip_app_build: true # Skip build for static sites
+          app_build_command: "" # No build command needed for static sites
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
