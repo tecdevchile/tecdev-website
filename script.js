@@ -373,6 +373,53 @@ class HeroCarousel {
     }
 }
 
+// Lazy Loading for Hero Images
+class HeroImageLoader {
+    constructor() {
+        this.loadedImages = new Set();
+        this.init();
+    }
+    
+    init() {
+        // Load first image immediately
+        this.loadImage('images/hero/carousel-1.jpg');
+        
+        // Load other images when needed
+        this.preloadImages();
+    }
+    
+    loadImage(src) {
+        if (this.loadedImages.has(src)) return;
+        
+        const img = new Image();
+        img.onload = () => {
+            this.loadedImages.add(src);
+            this.applyBackground(src);
+        };
+        img.src = src;
+    }
+    
+    applyBackground(src) {
+        const slides = document.querySelectorAll('.hero-bg-slide');
+        slides.forEach(slide => {
+            if (slide.dataset.bg === src) {
+                slide.style.backgroundImage = `url('${src}')`;
+            }
+        });
+    }
+    
+    preloadImages() {
+        const images = [
+            'images/hero/carousel-2.jpg',
+            'images/hero/carousel-3.jpg'
+        ];
+        
+        images.forEach(src => {
+            setTimeout(() => this.loadImage(src), 1000);
+        });
+    }
+}
+
 // Cookie Banner Management
 class CookieBanner {
     constructor() {
@@ -446,6 +493,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar banner de cookies
     new CookieBanner();
+    
+    // Inicializar lazy loading de imágenes
+    new HeroImageLoader();
 });
 
 // Prevenir zoom en inputs en iOS
