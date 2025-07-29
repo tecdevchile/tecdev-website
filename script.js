@@ -432,12 +432,32 @@ class CookieBanner {
     }
     
     init() {
+        // Configurar Google Analytics con consentimiento por defecto
+        this.setupGoogleAnalytics();
+        
         if (!this.cookieConsent) {
             this.showBanner();
+        } else {
+            // Si ya hay consentimiento, aplicar la configuración
+            if (this.cookieConsent === 'accepted') {
+                this.enableAnalytics();
+            } else {
+                this.disableAnalytics();
+            }
         }
         
         this.acceptBtn.addEventListener('click', () => this.acceptCookies());
         this.rejectBtn.addEventListener('click', () => this.rejectCookies());
+    }
+    
+    setupGoogleAnalytics() {
+        // Configurar Google Analytics con consentimiento por defecto
+        if (typeof gtag !== 'undefined') {
+            gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied'
+            });
+        }
     }
     
     showBanner() {
@@ -472,13 +492,23 @@ class CookieBanner {
     }
     
     enableAnalytics() {
-        // Aquí puedes habilitar Google Analytics u otras herramientas
-        console.log('Analytics habilitado');
+        // Habilitar Google Analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('consent', 'update', {
+                'analytics_storage': 'granted'
+            });
+            console.log('Google Analytics habilitado');
+        }
     }
     
     disableAnalytics() {
-        // Aquí puedes deshabilitar Google Analytics u otras herramientas
-        console.log('Analytics deshabilitado');
+        // Deshabilitar Google Analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('consent', 'update', {
+                'analytics_storage': 'denied'
+            });
+            console.log('Google Analytics deshabilitado');
+        }
     }
 }
 
