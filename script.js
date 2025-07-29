@@ -93,6 +93,15 @@ contactForm.addEventListener('submit', async (e) => {
         return;
     }
     
+    // Validar reCAPTCHA (solo en producción)
+    if (typeof grecaptcha !== 'undefined' && window.location.protocol !== 'file:') {
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+            showNotification('Por favor, completa el reCAPTCHA', 'error');
+            return;
+        }
+    }
+    
     // Mostrar estado de carga
     setLoadingState(true);
     
@@ -106,6 +115,11 @@ contactForm.addEventListener('submit', async (e) => {
             to_name: 'Tecdev Team'
         };
         
+        // Agregar reCAPTCHA response si está disponible
+        if (typeof grecaptcha !== 'undefined') {
+            templateParams['g-recaptcha-response'] = grecaptcha.getResponse();
+        }
+        
         // Enviar email usando EmailJS
         // Reemplaza con tus IDs reales de EmailJS
         await emailjs.send(
@@ -118,9 +132,19 @@ contactForm.addEventListener('submit', async (e) => {
         showNotification('¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.', 'success');
         contactForm.reset();
         
+        // Resetear reCAPTCHA
+        if (typeof grecaptcha !== 'undefined') {
+            grecaptcha.reset();
+        }
+        
     } catch (error) {
         console.error('Error al enviar email:', error);
         showNotification('Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.', 'error');
+        
+        // Resetear reCAPTCHA en caso de error
+        if (typeof grecaptcha !== 'undefined') {
+            grecaptcha.reset();
+        }
     } finally {
         setLoadingState(false);
     }
@@ -526,6 +550,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar lazy loading de imágenes
     new HeroImageLoader();
+    
+    // Ocultar reCAPTCHA en desarrollo local
+    if (window.location.protocol === 'file:') {
+        const recaptchaElement = document.querySelector('.g-recaptcha');
+        if (recaptchaElement) {
+            recaptchaElement.style.display = 'none';
+        }
+    }
 });
 
 // Prevenir zoom en inputs en iOS

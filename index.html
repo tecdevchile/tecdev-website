@@ -298,6 +298,12 @@
                     <div class="form-group">
                         <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto" rows="5" required></textarea>
                     </div>
+                    
+                    <!-- reCAPTCHA -->
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6LdD1JIrAAAAALvNL9zzg_lgu8aRdITyUZBwJPWw"></div>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary" id="submitBtn">
                         <span class="btn-text">Enviar Mensaje</span>
                         <span class="btn-loading" style="display: none;">
@@ -356,6 +362,9 @@
             'cookie_flags': 'SameSite=None;Secure'
         });
     </script>
+    
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
