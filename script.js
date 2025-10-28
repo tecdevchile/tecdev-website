@@ -636,4 +636,225 @@ errorStyles.textContent = `
 document.head.appendChild(errorStyles);
 
 // Inicializar validación de formulario
-document.addEventListener('DOMContentLoaded', setupFormValidation); 
+document.addEventListener('DOMContentLoaded', setupFormValidation);
+
+// ===== FUNCIONALIDAD PARA PÁGINA CMMS =====
+
+// Formulario de demo del CMMS
+const demoForm = document.getElementById('demoForm');
+
+if (demoForm) {
+    demoForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Obtener datos del formulario
+        const formData = new FormData(demoForm);
+        const data = Object.fromEntries(formData);
+        
+        // Validación básica
+        const requiredFields = ['nombre', 'email', 'empresa', 'industria'];
+        const missingFields = requiredFields.filter(field => !data[field]);
+        
+        if (missingFields.length > 0) {
+            showNotification('Por favor, completa todos los campos requeridos.', 'error');
+            return;
+        }
+        
+        // Validación de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+            showNotification('Por favor, ingresa un email válido.', 'error');
+            return;
+        }
+        
+        // Mostrar estado de carga
+        const submitBtn = demoForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        
+        try {
+            // Simular envío (aquí puedes integrar con tu sistema de email o CRM)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Éxito
+            showNotification('¡Demo solicitado exitosamente! Te contactaremos pronto.', 'success');
+            demoForm.reset();
+            
+            // Enviar a Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'demo_requested', {
+                    'event_category': 'PredictivaPRO',
+                    'event_label': data.industria
+                });
+            }
+            
+        } catch (error) {
+            showNotification('Error al enviar la solicitud. Por favor, inténtalo de nuevo.', 'error');
+        } finally {
+            // Restaurar botón
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+}
+
+// Función para mostrar notificaciones
+function showNotification(message, type = 'info') {
+    // Crear elemento de notificación
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+            <button class="notification-close">&times;</button>
+        </div>
+    `;
+    
+    // Agregar estilos
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 400px;
+    `;
+    
+    // Agregar al DOM
+    document.body.appendChild(notification);
+    
+    // Mostrar con animación
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Botón de cerrar
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    });
+    
+    // Auto-ocultar después de 5 segundos
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 300);
+        }
+    }, 5000);
+}
+
+// Animaciones específicas para la página CMMS
+function initCMMSAnimations() {
+    const animatedElements = document.querySelectorAll('.benefit-card, .feature-item, .pricing-card, .demo-benefit');
+    
+    animatedElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        
+        // Delay escalonado para las tarjetas de beneficios
+        if (el.classList.contains('benefit-card')) {
+            el.style.transitionDelay = `${index * 0.1}s`;
+        }
+        
+        observer.observe(el);
+    });
+}
+
+// Inicializar animaciones de PredictivaPRO si estamos en esa página
+if (window.location.pathname.includes('cmms.html') || document.querySelector('.cmms-hero')) {
+    document.addEventListener('DOMContentLoaded', initCMMSAnimations);
+}
+
+// Smooth scroll para enlaces internos en la página PredictivaPRO
+document.addEventListener('DOMContentLoaded', () => {
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    
+    internalLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Animaciones del Hero Section
+    const heroSection = document.querySelector('.cmms-hero');
+    if (heroSection) {
+        // Animación de entrada para las partículas
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach((particle, index) => {
+            particle.style.animationDelay = `${index * 0.5}s`;
+        });
+        
+        // Animación de entrada para las floating cards
+        const floatingCards = document.querySelectorAll('.floating-card');
+        floatingCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.3}s`;
+        });
+        
+        // Efecto parallax suave en el scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${rate}px)`;
+            }
+        });
+    }
+});
+
+// Articles Carousel
+document.addEventListener('DOMContentLoaded', () => {
+    const articlesGrid = document.querySelector('.articles-grid');
+    const prevBtn = document.getElementById('articlePrevBtn');
+    const nextBtn = document.getElementById('articleNextBtn');
+    
+    if (!articlesGrid || !prevBtn || !nextBtn) return;
+    
+    const scrollAmount = 320; // Approximate card width + gap
+    
+    prevBtn.addEventListener('click', () => {
+        articlesGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        articlesGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+});
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+}); 

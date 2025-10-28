@@ -54,7 +54,7 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="images/logo/Logo-while.png" alt="Tecdev SpA" class="logo-img">
+                    <img src="images/logo/Logo_h_t.png" alt="Tecdev SpA" class="logo-img">
                 </div>
                 <ul class="nav-menu">
                     <li class="nav-item">
@@ -65,6 +65,9 @@
                     </li>
                     <li class="nav-item">
                         <a href="#nosotros" class="nav-link">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#blog" class="nav-link">Blog</a>
                     </li>
                     <li class="nav-item">
                         <a href="#contacto" class="nav-link">Contacto</a>
@@ -254,6 +257,70 @@
         </div>
     </section>
 
+    <!-- Blog Section -->
+    <section id="blog" class="articles">
+        <div class="container">
+            <div class="section-header">
+                <h2>Blog</h2>
+                <p>Explora nuestros contenidos sobre tecnología, desarrollo de software y mejores prácticas</p>
+            </div>
+            <div class="articles-carousel-wrapper">
+                <div class="articles-grid">
+                        <article class="article-card">
+                        <div class="article-image">
+                            <img src="images/hero/carousel-1.jpg" alt="Desarrollo de software a medida" class="article-img">
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category">Desarrollo</span>
+                            <h3><a href="articulo-1.html">¿Cómo elegir la mejor tecnología para tu proyecto?</a></h3>
+                            <p>Conoce los factores clave para tomar decisiones tecnológicas que impulsen el crecimiento de tu negocio.</p>
+                            <div class="article-footer">
+                                <span class="article-date">15 Enero, 2025</span>
+                                <a href="articulo-1.html" class="article-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="article-card">
+                        <div class="article-image">
+                            <img src="images/hero/carousel-2.jpg" alt="Integración de sistemas" class="article-img">
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category">Integración</span>
+                            <h3><a href="articulo-2.html">APIs: La clave para conectar tu ecosistema digital</a></h3>
+                            <p>Descubre cómo las APIs modernas pueden transformar la forma en que tus sistemas se comunican.</p>
+                            <div class="article-footer">
+                                <span class="article-date">06 Mayo, 2025</span>
+                                <a href="articulo-2.html" class="article-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="article-card">
+                        <div class="article-image">
+                            <img src="images/hero/carousel-3.jpg" alt="Transformación digital" class="article-img">
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category">Estrategia</span>
+                            <h3><a href="articulo-3.html">Transformación digital: Pasos para comenzar</a></h3>
+                            <p>Guía práctica para empresas que buscan digitalizar sus procesos y mejorar su competitividad.</p>
+                            <div class="article-footer">
+                                <span class="article-date">4 Junio, 2025</span>
+                                <a href="articulo-3.html" class="article-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <button class="article-carousel-btn prev-btn" id="articlePrevBtn" aria-label="Artículo anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="article-carousel-btn next-btn" id="articleNextBtn" aria-label="Artículo siguiente">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Contacto Section -->
     <section id="contacto" class="contact">
         <div class="container">
@@ -320,7 +387,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><img src="images/logo/Logo-while.png" alt="Tecdev SpA" class="logo-img"></h3>
+                    <h3><img src="images/logo/Logo_h_t.png" alt="Tecdev SpA" class="logo-img"></h3>
                     <p>Tu socio en la evolución digital. Transformamos ideas en soluciones reales.</p>
                 </div>
                 <div class="footer-section">
@@ -329,7 +396,7 @@
                         <li><a href="#servicios">Desarrollo a Medida</a></li>
                         <li><a href="#servicios">Consultoría</a></li>
                         <li><a href="#servicios">Integraciones</a></li>
-                        <li><a href="#servicios">Soporte</a></li>
+                        <li><a href="#blog">Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -376,5 +443,54 @@
         })();
     </script>
     <script src="script.js"></script>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Tecdev SpA",
+        "url": "https://tecdev.cl",
+        "logo": "https://tecdev.cl/images/logo/Logo_h_t.png",
+        "description": "Consultoría de software en Santiago, Chile. Desarrollo de software a medida, integración de sistemas y modernización tecnológica.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Santiago",
+            "addressCountry": "CL"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+56-9-4558-2230",
+            "contactType": "Consultas",
+            "email": "contacto@tecdev.cl",
+            "availableLanguage": "es"
+        },
+        "sameAs": [],
+        "areaServed": "Chile"
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Tecdev SpA",
+        "image": "https://tecdev.cl/images/logo/Logo_h_t.png",
+        "description": "Desarrollo de software a medida, consultoría tecnológica e integración de sistemas en Chile",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Santiago",
+            "addressCountry": "CL"
+        },
+        "telephone": "+56-9-4558-2230",
+        "email": "contacto@tecdev.cl",
+        "url": "https://tecdev.cl",
+        "priceRange": "Consulta",
+        "serviceArea": {
+            "@type": "Country",
+            "name": "Chile"
+        }
+    }
+    </script>
 </body>
 </html> 
